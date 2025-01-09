@@ -1,0 +1,72 @@
+
+.ui-w-80 {
+    width: 80px;
+    height: auto;
+}
+
+.btn-default {
+    border: 1px solid rgba(24, 28, 33, 0.1);
+    background: transparent;
+    color: #4E5155;
+}
+
+.btn-outline-primary {
+    border: 1px solid  rgb(82, 100, 0);
+    background: transparent;
+    color: #26B4FF;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.card {
+    box-shadow: 0 1px 4px rgb(82, 100, 0); 
+    margin-bottom: 10px; 
+    margin-top: 130px; 
+}
+.account-settings-links {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    padding: 20px; 
+}
+
+.card-body.media {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+
+.media-body {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.account-settings-fileinput {
+    display: none;
+}
+
+.account-settings-links .list-group-item.active {
+    font-weight: bold;
+    font-size: 18px;
+    color: #26B4FF;
+    background: transparent;
+}
+
+.light-style .account-settings-links .list-group-item {
+    padding: 0.85rem 1.5rem;
+    border: 1px solid rgba(24, 28, 33, 0.03);
+}
+
+
+.row-bordered {
+    margin: 0;
+    padding: 0;
+}
+.mt-3{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

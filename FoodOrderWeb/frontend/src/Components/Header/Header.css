@@ -1,0 +1,282 @@
+.header-container {
+    margin-top: 85px;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.new-product-section {
+    height: 450px;
+    width: 25%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+}
+.new-product-section:hover {
+    transform: scale(1.05);
+    border: 1px solid rgb(82, 100, 0); 
+}
+
+.new-product-section .badge {
+    background-color: #ff6666;;
+    color: rgb(254, 245, 216);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 3pxpx;
+}
+.carousel {
+    width: 70%; 
+    height: 450px; 
+    overflow: hidden; 
+    border-radius: 4px;
+
+}
+
+.carousel-inner {
+    height: 100%; 
+}
+
+.carousel-item {
+    height: 100%; 
+}
+
+.carousel-item img {
+    width: 100%; 
+    height: 100%;
+    object-fit: cover; 
+}
+
+.new-product-section h2 {
+    margin-top: 3px;
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #333;
+}
+.new-product-section p {
+font-size: 16.5px;
+}
+
+.new-product-section .product-type {
+    font-size: 15px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.new-product-section .product-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.new-product-section .price {
+    font-size: 1.2em;
+    color: #333;
+    margin: 10px 0;
+}
+
+.details-button {
+    padding: 10px 20px;
+    font-size: 15px;
+    background-color:  rgb(82, 100, 0);
+    color: rgb(254, 245, 216);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.header-contents {
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    max-width: 60%;
+    animation: fadeIn 3s;
+    background: rgba(0, 0, 0, 0.5); 
+    padding: 20px; 
+    border-radius: 8px; 
+    color: white; 
+}
+.header-contents h2 {
+    font-size: 26px;
+    font-style: initial;
+}
+
+.header-contents p {
+    font-size: 15px;
+}
+
+.header-contents button {
+    border: none;
+    color: #747474;
+    font-weight: 500;
+    padding: 1vw 2.3vw;
+    background: white;
+    font-size: max(1vw, 13px);
+    border-radius: 50px;
+}
+
+.featured-products {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.featured-products img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+.promo:hover, .discount:hover {
+    transform: scale(1.05);
+    border: 1px solid rgb(82, 100, 0); 
+}
+.promotions-section {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.promo{
+    height: 240px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.discount {
+    height: 186px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.promo-badge {
+    background-color: #ff6666;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 7px;
+    margin-bottom: 10px;
+}
+
+.promo h3, .discount h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #333;
+}
+
+.promo p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+ .newsletter-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color:  rgb(82, 100, 0);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.promo-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color:  rgb(82, 100, 0);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+}
+
+.discount p {
+    font-size: 2em;
+    color: #ff6600;
+    font-weight: bold;
+    margin: 10px 0;
+}
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        margin-top: 90px;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .new-product-section {
+        height: auto;
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .carousel {
+        width: 100%;
+        height: 300px;
+    }
+
+    .carousel-item img {
+        object-fit: cover;
+    }
+
+    .header-contents {
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .header-contents h2 {
+        font-size: 20px;
+    }
+
+    .header-contents p {
+        font-size: 14px;
+    }
+
+    .header-contents button {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    .featured-products {
+        width: 100%;
+    }
+
+    .promotions-section {
+        width: 100%;
+    }
+
+    .promo, .discount {
+        padding: 15px;
+    }
+
+    .promo h3, .discount h3 {
+        font-size: 1em;
+    }
+
+    .promo p {
+        font-size: 0.8em;
+    }
+
+    .promo-button, .newsletter-button {
+        font-size: 0.9em;
+        padding: 8px 15px;
+    }
+}
