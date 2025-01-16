@@ -11,7 +11,10 @@ app.use(express.json());
 app.use("/api", productRoutes);
 app.use("/api", userRoutes);
 app.use("/api", orderRoutes);
-require('./mqttClient');
+
+require('./websocketHandler');
+require('./mqttHandler');
+
 
 // app.get('/profile', (req, res) => {
 //   if (req.session.user) {
@@ -21,6 +24,7 @@ require('./mqttClient');
 //   }
 // });
 
-app.listen(8801, () => {
-  console.log("listening");
+const PORT = 8801;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

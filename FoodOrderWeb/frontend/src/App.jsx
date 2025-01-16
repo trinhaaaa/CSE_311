@@ -9,6 +9,11 @@ import LoginPopup from "./components/LoginPopup/LoginPopup";
 import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import Menu from "./Pages/Menu/Menu";
+import MaterialDashboard from './components/MaterialDashboard/MaterialDashboard';
+
+
+
+
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -25,6 +30,7 @@ const App = () => {
           <Route path="/myAccount" element={<MyAccount />} />
           <Route path="/order" element={<PlaceOrder />} />
           <Route path="/myOrder" element={<MyOrders />} />
+          <Route path="/dashboard" element={<MaterialDashboard />} />
         </Routes>
       </div>
       <Footer />

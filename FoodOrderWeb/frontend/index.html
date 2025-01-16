@@ -13,43 +13,6 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
-
-    <h1>ESP32 Sensor Data</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Temperature</th>
-                <th>Humidity</th>
-                <th>Timestamp</th>
-            </tr>
-        </thead>
-        <tbody id="data-table">
-        </tbody>
-    </table>
-
-    <script>
-        async function fetchData() {
-            const response = await fetch('http://localhost:3000/data'); // Lấy dữ liệu từ backend
-            const data = await response.json();
-
-            const tableBody = document.getElementById('data-table');
-            tableBody.innerHTML = ''; // Xóa nội dung cũ
-
-            data.forEach((item) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.temperature}</td>
-                    <td>${item.humidity}</td>
-                    <td>${new Date(item.timestamp).toLocaleString()}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        setInterval(fetchData, 5000); // Cập nhật dữ liệu mỗi 5 giây
-        fetchData(); // Gọi lần đầu tiên
-    </script>
-
 </body>
 
 </html>
