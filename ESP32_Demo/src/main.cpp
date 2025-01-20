@@ -1,89 +1,145 @@
+// #include <WiFi.h>
+// #include <PubSubClient.h>
+
+// const char *ssid = "EIU FACULTY/STAFF";
+// const char *password = "EIU.edu@!%";
+// const char *mqtt_server = "broker.hivemq.com";
+// const int mqtt_port = 1883;
+// const char *mqtt_topic = "food/materials/weight";
+
+// WiFiClient espClient;
+// PubSubClient client(espClient);
+
+// float current_weight = 100.0;
+// float previous_weight = current_weight;
+// unsigned long last_publish_time = 0;
+// const unsigned long publish_interval = 30000;
+
+// void connectWiFi() {Serial.println("Connecting to WiFi...");
+// Serial.println("Connecting to MQTT broker...");
+// Serial.println("Publishing weight data...");
+// Serial.print("Current weight: ");
+// Serial.println(current_weight);
+// Serial.print("Previous weight: ");
+// Serial.println(previous_weight);
+//     WiFi.begin(ssid, password);
+//     while (WiFi.status() != WL_CONNECTED) {
+//         delay(500);
+//         Serial.print(".");
+//     }
+//     Serial.println("\nWiFi connected!");
+// }
+
+// void connectMQTT() {
+//     while (!client.connected()) {
+//         if (client.connect("ESP32Client")) {
+//             Serial.println("Connected to MQTT broker!");
+//         } else {
+//             delay(5000);
+//         }
+//     }
+// }
+
+// void publishWeight() {
+//     char weight_message[100];
+//     int material_id = 2; // Example ID
+//     snprintf(weight_message, sizeof(weight_message), "{\"material_id\": %d, \"weight\": %.2f}", material_id, current_weight);
+//     client.publish(mqtt_topic, weight_message);
+// }
+
+
+// void setup() {
+//     Serial.begin(115200);
+//     connectWiFi();
+//     client.setServer(mqtt_server, mqtt_port);
+//     connectMQTT();
+// }
+
+// void loop() {
+//     if (!client.connected()) {
+//         connectMQTT();
+//     }
+
+//     unsigned long current_time = millis();
+//     if (current_time - last_publish_time >= publish_interval || current_weight != previous_weight) {
+//         last_publish_time = current_time;
+//         current_weight -= 0.5;
+//         if (current_weight < 0) current_weight = 100.0;
+//         publishWeight();
+//         previous_weight = current_weight;
+//     }
+
+//     client.loop();
+// }
 #include <WiFi.h>
-#include <PubSubClient.h>
+#include <ArduinoWebsockets.h>
 
-// WiFi credentials
-const char* ssid = "Ha";                 
-const char* password = "0365372229";    
+using namespace websockets;
 
-// MQTT broker
-const char* mqtt_server = "broker.hivemq.com";  // MQTT Broker public
-const int mqtt_port = 1883;                    // Cổng MQTT (mặc định là 1883)
-const char* mqtt_topic = "warehouse/materials/weight"; // Tên topic
+const char *ssid = "EIU FACULTY/STAFF";
+const char *password = "EIU.edu@!%";
+const char *websocket_server = "ws://your-websocket-server.com:port";
 
-WiFiClient espClient;
-PubSubClient client(espClient);
+WebsocketsClient wsClient;
 
-float current_weight = 100.0; // Khởi tạo cân nặng
+float current_weight = 100.0;
+float previous_weight = current_weight;
+unsigned long last_publish_time = 0;
+const unsigned long publish_interval = 30000;
 
-// Kết nối WiFi
 void connectWiFi() {
-    Serial.print("Connecting to WiFi");
+    Serial.println("Connecting to WiFi...");
     WiFi.begin(ssid, password);
-
-    int maxRetries = 20;  // Giới hạn số lần thử kết nối
-    int retryCount = 0;
-
-    while (WiFi.status() != WL_CONNECTED && retryCount < maxRetries) {
+    while (WiFi.status() != WL_CONNECTED) {
         delay(500);
         Serial.print(".");
-        retryCount++;
     }
+    Serial.println("\nWiFi connected!");
+}
 
-    if (WiFi.status() == WL_CONNECTED) {
-        Serial.println("\nWiFi connected!");
-        Serial.print("IP Address: ");
-        Serial.println(WiFi.localIP());
+void connectWebSocket() {
+    Serial.println("Connecting to WebSocket server...");
+    if (wsClient.connect(websocket_server)) {
+        Serial.println("Connected to WebSocket server!");
     } else {
-        Serial.println("\nFailed to connect to WiFi. Restarting...");
+        Serial.println("Failed to connect to WebSocket server!");
         delay(5000);
-        ESP.restart(); // Khởi động lại ESP nếu không kết nối được
     }
 }
 
-// Kết nối MQTT
-void connectMQTT() {
-    while (!client.connected()) {
-        Serial.print("Connecting to MQTT broker...");
-        if (client.connect("ESP32Client")) { // Tên client MQTT
-            Serial.println("Connected to MQTT broker!");
-        } else {
-            Serial.print("Failed to connect. State: ");
-            Serial.println(client.state()); // In mã lỗi
-            delay(5000); // Chờ 5 giây trước khi thử lại
-        }
+void publishWeight() {
+    char weight_message[100];
+    int material_id = 2; // Example ID
+    snprintf(weight_message, sizeof(weight_message), "{\"material_id\": %d, \"weight\": %.2f}", material_id, current_weight);
+
+    if (wsClient.available()) {
+        wsClient.send(weight_message);
+        Serial.println("Weight data sent: ");
+        Serial.println(weight_message);
+    } else {
+        Serial.println("WebSocket connection is not available.");
     }
 }
 
 void setup() {
     Serial.begin(115200);
-    connectWiFi(); // Kết nối WiFi
-    client.setServer(mqtt_server, mqtt_port); // Cấu hình MQTT broker
-    connectMQTT(); // Kết nối MQTT
+    connectWiFi();
+    connectWebSocket();
 }
 
 void loop() {
-    // Kiểm tra kết nối WiFi
-    if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("WiFi connection lost. Reconnecting...");
-        connectWiFi();
+    if (!wsClient.available()) {
+        connectWebSocket();
     }
 
-    // Kiểm tra kết nối MQTT
-    if (!client.connected()) {
-        Serial.println("MQTT connection lost. Reconnecting...");
-        connectMQTT();
+    unsigned long current_time = millis();
+    if (current_time - last_publish_time >= publish_interval || current_weight != previous_weight) {
+        last_publish_time = current_time;
+        current_weight -= 0.5;
+        if (current_weight < 0) current_weight = 100.0;
+        publishWeight();
+        previous_weight = current_weight;
     }
 
-    client.loop();
-
-    // Giảm cân nặng giả lập ngẫu nhiên
-    float weight_loss = random(5, 20) / 10.0f; // Giảm từ 0.5kg đến 2.0kg
-    current_weight = max(current_weight - weight_loss, 0.0f); // Đảm bảo không âm
-
-    // Tạo payload JSON
-    String payload = "{\"material_id\":1,\"weight\":" + String(current_weight) + "}";
-    client.publish(mqtt_topic, payload.c_str()); // Gửi dữ liệu đến topic
-    Serial.println("Data sent: " + payload);
-
-    delay(12000); // Gửi dữ liệu mỗi 2 phút
+    wsClient.poll();
 }

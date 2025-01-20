@@ -5,6 +5,18 @@ const app = express();
 const userRoutes = require("./routes/userRoutes.js");
 const productRoutes = require("./routes/productRoutes.js");
 const orderRoutes = require("./routes/orderRoutes.js");
+// const helmet = require("helmet");
+
+// app.use(
+//     helmet.contentSecurityPolicy({
+//         directives: {
+//             defaultSrc: ["'self'"],
+//             fontSrc: ["'self'", "https://fonts.googleapis.com"],
+//         },
+//     })
+// );
+
+
 app.use(cors());
 app.use(express.json());
 

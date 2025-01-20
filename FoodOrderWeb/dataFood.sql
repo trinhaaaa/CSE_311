@@ -10,12 +10,12 @@ create table role (
 
 create table user (
   user_id int auto_increment,
-  full_name varchar(100), 
+  full_name varchar(100), devicemanager
   email varchar(100),      
   phone_number varchar(15), 
   password varchar(255),
   role_id int,
-  deleted int,
+  deleted int,devicemanager
   primary key (user_id),
   foreign key (role_id) references role(role_id)
 );
